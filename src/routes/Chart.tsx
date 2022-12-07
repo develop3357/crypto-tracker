@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
-import { useOutletContext } from "react-router-dom";
+import { redirect, useOutletContext } from "react-router-dom";
 
 interface IHistorical {
   time_open: string;
@@ -16,6 +16,8 @@ interface IHistorical {
 interface ChartProps {
   coinId: string;
 }
+
+interface CandleStickArray {}
 function Chart() {
   const coinId = useOutletContext();
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
@@ -27,11 +29,13 @@ function Chart() {
         "Loading chart..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
-              name: "Price",
-              data: data?.map((price) => price.close as number) as number[],
+              data: data?.map((price) => [
+                Number(price.time_close) * 1000,
+                [price.open, price.high, price.low, price.close],
+              ]) as number[][],
             },
           ]}
           options={{
@@ -46,30 +50,19 @@ function Chart() {
               },
               background: "transparent",
             },
-            grid: { show: false },
-            stroke: {
-              curve: "smooth",
-              width: 4,
-            },
+            grid: { show: true, borderColor: "#718093" },
             yaxis: {
-              show: false,
+              show: true,
+              labels: {
+                formatter: (val) => val.toFixed(0),
+              },
             },
             xaxis: {
               axisBorder: { show: false },
-              axisTicks: { show: false },
-              labels: { show: false },
+              axisTicks: { show: true },
+              labels: { show: true },
               type: "datetime",
               categories: data?.map((price) => price.time_close),
-            },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-            },
-            colors: ["#0fbcf9"],
-            tooltip: {
-              y: {
-                formatter: (value) => `$${value.toFixed(2)}`,
-              },
             },
           }}
         />
