@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMatch, useParams, Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
+import { Helmet } from "react-helmet-async";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -146,6 +147,11 @@ function Coin() {
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
+      <Helmet>
+        <title>
+          {loading ? "Crtypto Tracker" : `Crtypto Tracker :: ${infoData?.name}`}
+        </title>
+      </Helmet>
       <Header>
         <Title>{loading ? "Loading..." : infoData?.name}</Title>
       </Header>
