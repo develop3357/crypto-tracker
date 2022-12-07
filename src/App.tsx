@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import Nav from "./components/Nav";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -30,6 +31,7 @@ function App() {
           <title>Crypto Tracker</title>
         </Helmet>
         <GlobalStyle />
+        <Nav />
         <Outlet />
       </HelmetProvider>
     </div>
