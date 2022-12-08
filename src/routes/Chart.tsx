@@ -3,6 +3,7 @@ import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { useOutletContext } from "react-router-dom";
 import { useTheme } from "styled-components";
+import { ICoinContext } from "./Coin";
 
 interface IHistorical {
   time_open: string;
@@ -16,7 +17,7 @@ interface IHistorical {
 }
 
 function Chart() {
-  const coinId = useOutletContext();
+  const { coinId } = useOutletContext<ICoinContext>();
   const theme = useTheme();
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],

@@ -92,7 +92,7 @@ interface InfoData {
   first_data_at: string;
   last_data_at: string;
 }
-interface PriceData {
+export interface PriceData {
   id: string;
   name: string;
   symbol: string;
@@ -126,6 +126,11 @@ interface PriceData {
   };
 }
 
+export interface ICoinContext {
+  coinId: string;
+  tickersData: PriceData;
+}
+
 function Coin() {
   const { coinId } = useParams<string>();
   const priceMatch = useMatch("/:coinId/price");
@@ -140,7 +145,6 @@ function Coin() {
     { refetchInterval: 5000 }
   );
   const loading = infoLoading || tickersLoading;
-  console.log(tickersData);
   return (
     <Container>
       <Helmet>
@@ -166,7 +170,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>${tickersData?.quotes.USD.price}</span>
+              <span>${tickersData?.quotes.USD.price.toFixed(2)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -190,10 +194,11 @@ function Coin() {
             </Tab>
           </Tabs>
 
-          <Outlet context={coinId} />
+          <Outlet context={{ coinId, tickersData } as ICoinContext} />
         </>
       )}
     </Container>
   );
 }
+
 export default Coin;
