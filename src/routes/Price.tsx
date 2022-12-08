@@ -4,9 +4,14 @@ import { ICoinContext } from "./Coin";
 
 const Container = styled.div`
   max-width: 480px;
+  max-height: 600px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   div {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    min-width: 240px;
     label {
       display: block;
       color: ${(props) => props.theme.accentColor};
@@ -16,7 +21,7 @@ const Container = styled.div`
     }
     span {
       font-size: 18px;
-      padding: 5px;
+      padding: 0 5px;
     }
   }
 `;
