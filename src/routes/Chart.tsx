@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { redirect, useOutletContext } from "react-router-dom";
+import { useTheme } from "styled-components";
 
 interface IHistorical {
   time_open: string;
@@ -20,6 +21,7 @@ interface ChartProps {
 interface CandleStickArray {}
 function Chart() {
   const coinId = useOutletContext();
+  const theme = useTheme();
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId as string)
   );
@@ -40,7 +42,7 @@ function Chart() {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: theme.name as "dark" | "light" | undefined,
             },
             chart: {
               height: 300,

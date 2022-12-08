@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled, { ThemeContext, useTheme } from "styled-components";
+import styled, { useTheme } from "styled-components";
+import { darkTheme, lightTheme } from "../theme";
 
 const NavContainer = styled.div`
   padding: 0px 20px;
@@ -18,23 +19,20 @@ const NavBtn = styled.button<{ right?: boolean }>`
   float: ${(props) => (props.right ? "right" : "left")};
 `;
 
-const theme = "dark";
+interface INav {
+  themeHandler: Function;
+}
 
-function Nav() {
+function Nav({ themeHandler: setTheme }: INav) {
+  const theme = useTheme();
+  const [isDarkTheme, setDarkTheme] = useState(true);
   const navigate = useNavigate();
-  const themeContext = useContext(ThemeContext);
-  const ut = useTheme();
-  const [darkMode, setDarkMode] = useState(true);
-  // themeContext.bgColor = "white";
   const onBackBtnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     navigate(-1);
   };
   const toggleThemeBtnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // themeContext.bgColor = "white";
-    // themeContext.textColor = "red";
-    // setDarkMode((darkMode) => !darkMode);
-    console.log(themeContext);
-    console.log(ut);
+    setTheme(isDarkTheme ? lightTheme : darkTheme);
+    setDarkTheme((isDarkTheme) => !isDarkTheme);
   };
   return (
     <NavContainer>
@@ -43,7 +41,7 @@ function Nav() {
         <Link to="/">🏠</Link>
       </NavBtn>
       <NavBtn right onClick={toggleThemeBtnClick}>
-        {theme === "dark" ? "☼" : "☾"}
+        {isDarkTheme ? "☼" : "☾"}
       </NavBtn>
     </NavContainer>
   );
