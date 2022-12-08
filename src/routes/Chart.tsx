@@ -14,16 +14,16 @@ interface IHistorical {
   volume: number;
   market_cap: number;
 }
-interface ChartProps {
-  coinId: string;
-}
 
-interface CandleStickArray {}
 function Chart() {
   const coinId = useOutletContext();
   const theme = useTheme();
-  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
-    fetchCoinHistory(coinId as string)
+  const { isLoading, data } = useQuery<IHistorical[]>(
+    ["ohlcv", coinId],
+    () => fetchCoinHistory(coinId as string),
+    {
+      refetchInterval: 10000,
+    }
   );
   return (
     <div>
