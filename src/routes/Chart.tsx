@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
-import { redirect, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { useTheme } from "styled-components";
 
 interface IHistorical {

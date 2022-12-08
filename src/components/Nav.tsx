@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import { darkTheme, lightTheme } from "../theme";
 
 const NavContainer = styled.div`
@@ -24,7 +24,6 @@ interface INav {
 }
 
 function Nav({ themeHandler: setTheme }: INav) {
-  const theme = useTheme();
   const [isDarkTheme, setDarkTheme] = useState(true);
   const navigate = useNavigate();
   const onBackBtnClick = (event: React.MouseEvent<HTMLButtonElement>) => {

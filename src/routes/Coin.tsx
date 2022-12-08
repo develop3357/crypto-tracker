@@ -72,12 +72,6 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
-interface RouteParams {
-  coinId: string;
-}
-interface RouteState {
-  name: string;
-}
 interface InfoData {
   id: string;
   name: string;
